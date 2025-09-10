@@ -90,7 +90,7 @@ async function searchConnections(provider: ConnectionsProvider) {
     }
 }
 
-class ConnectionsProvider implements vscode.TreeDataProvider<ConnectionNode> {
+export class ConnectionsProvider implements vscode.TreeDataProvider<ConnectionNode> {
 	private _onDidChangeTreeData: vscode.EventEmitter<ConnectionNode | undefined | void> = new vscode.EventEmitter<ConnectionNode | undefined | void>();
 	readonly onDidChangeTreeData: vscode.Event<ConnectionNode | undefined | void> = this._onDidChangeTreeData.event;
 

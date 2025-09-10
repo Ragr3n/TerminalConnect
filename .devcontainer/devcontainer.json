@@ -14,7 +14,7 @@
 		}
 	},
 	// ...existing config...
-	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y openssh-server &&  sudo service ssh start"
+	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y openssh-server && sudo service ssh start"
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

@@ -16,7 +16,7 @@ Connect to remote hosts via SSH or Telnet directly from VS Code, using host defi
 
 1. **Install the Extension:**  
    Search for "Terminal Connect" in the VS Code marketplace and install.
-
+    
 2. **Create a `connections.yaml` file:**  
    Place this file in your workspace root. Example:
    ```yaml
@@ -79,5 +79,3 @@ You can use `{host}` and `{port}` as placeholders.
 ## License
 
 MIT
-
-**Enjoy using Terminal Connect!**

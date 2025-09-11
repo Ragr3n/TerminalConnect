@@ -1,20 +1,21 @@
 {
   description = "Terminal Connect VS Code extension flake";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
 
-  outputs = { self, nixpkgs }: let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
-  in {
-    packages.${system}.vscode-terminal-connect = pkgs.vscode-utils.buildVscodeExtension {
-      name = "terminal-connect";
-      version = "0.0.1";
-      src = ./terminal-connect-0.0.1.vsix;
+  outputs = { self, nixpkgs, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in {
+      packages.${system}.vscode-terminal-connect = pkgs.vscode-utils.buildVscodeExtension {
+        version = "0.0.1";
+        src = ./terminal-connect-0.0.1.vsix;
         vscodeExtPublisher = "Ragr3n";
         vscodeExtName = "TerminalConnect";
         vscodeExtUniqueId = "Ragr3n.TerminalConnect";
+      };
     };
-  };
 }
-

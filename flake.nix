@@ -8,14 +8,13 @@
     pkgs = import nixpkgs { inherit system; };
   in {
     packages.${system}.vscode-terminal-connect = pkgs.vscode-utils.buildVscodeExtension {
-      pname = "terminal-connect";
+      name = "terminal-connect";
       version = "0.0.1";
       src = ./dist/terminal-connect-0.0.1.vsix;
-      meta = {
-        description = "Connect via SSH or telnet to hosts defined in a yaml file directly in VSCode";
-        license = pkgs.lib.licenses.mit;
-        maintainers = [ "Ragr3n" ];
-      };
+        vscodeExtPublisher = "Ragr3n";
+        vscodeExtName = "TerminalConnect";
+        vscodeExtUniqueId = "Ragr3n.TerminalConnect";
     };
   };
 }
+

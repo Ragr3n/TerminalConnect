@@ -15,3 +15,5 @@ vsc-extension-quickstart.md
 flake.nix
 flake.lock
 result/**
+.devcontainer/**
+.github/**

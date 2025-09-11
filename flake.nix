@@ -10,7 +10,7 @@
     packages.${system}.vscode-terminal-connect = pkgs.vscode-utils.buildVscodeExtension {
       name = "terminal-connect";
       version = "0.0.1";
-      src = ./dist/terminal-connect-0.0.1.vsix;
+      src = ./terminal-connect-0.0.1.vsix;
         vscodeExtPublisher = "Ragr3n";
         vscodeExtName = "TerminalConnect";
         vscodeExtUniqueId = "Ragr3n.TerminalConnect";

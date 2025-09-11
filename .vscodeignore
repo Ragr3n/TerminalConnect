@@ -17,3 +17,7 @@ flake.lock
 result/**
 .devcontainer/**
 .github/**
+node_modules/
+.git/
+.vscode/
+result

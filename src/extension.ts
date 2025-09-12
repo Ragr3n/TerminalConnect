@@ -223,8 +223,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Live search input box
 	let searchBox: vscode.InputBox | undefined;
-	context.subscriptions.push(
-		vscode.commands.registerCommand('terminalConnect.openTerminal', (node: ConnectionNode) => {
+	let lastSearchQuery: string | undefined;
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('terminalConnect.openTerminal', (node: ConnectionNode) => {
 			openTerminal(node);
 		}),
 		vscode.commands.registerCommand('terminalConnect.refresh', () => connectionsProvider.refresh()),
@@ -234,18 +236,21 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 			searchBox = vscode.window.createInputBox();
 			searchBox.placeholder = 'Type to search connections...';
-			searchBox.onDidChangeValue((value) => {
-			if (value && value.trim().length > 0) {
-				connectionsProvider.filter(value);
-			} else {
-				connectionsProvider.clearFilter();
+			if (lastSearchQuery) {
+				searchBox.value = lastSearchQuery;
 			}
-		});
+			searchBox.onDidChangeValue((value) => {
+				lastSearchQuery = value;
+				if (value && value.trim().length > 0) {
+					connectionsProvider.filter(value);
+				} else {
+					connectionsProvider.clearFilter();
+				}
+			});
 			searchBox.onDidAccept(() => {
 				searchBox?.dispose();
 			});
 			searchBox.onDidHide(() => {
-				connectionsProvider.clearFilter();
 				searchBox?.dispose();
 			});
 			searchBox.show();

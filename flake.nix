@@ -16,9 +16,19 @@
         buildInputs = [ pkgs.vsce ];
       };
       packages.${system}.default = pkgs.vscode-utils.buildVscodeExtension rec{
-        buildInputs = [ pkgs.nodejs pkgs.vsce ];
         inherit pname version;
-        src = ./${pname}-${version}.vsix;
+        # src = ./${pname}-${version}.vsix;
+        src = pkgs.buildNpmPackage {
+          name = "terminal-connect.zip";
+          src = ./.;
+          makeCacheWritable = true;
+          nativeBuildInputs = [ pkgs.vsce ];
+          npmDepsHash = "sha256-/bHgBq/A2UigozAzloRk4RiuuG44DMbdqPiDG9980MY=";
+          installPhase = ''
+            vsce package -o "$out"
+          '';
+         dontNpmBuild = true;
+        };
         vscodeExtPublisher = "Ragr3n";
         vscodeExtName = "TerminalConnect";
         vscodeExtUniqueId = "Ragr3n.TerminalConnect";

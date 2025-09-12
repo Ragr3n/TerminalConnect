@@ -161,6 +161,7 @@ export class ConnectionsProvider implements vscode.TreeDataProvider<ConnectionNo
 	clearFilter() {
 		this.filteredConnections = null;
 		this.lastQuery = null;
+		this._onDidChangeTreeData.fire(); // <-- Add this line
 	}
 
 	getTreeItem(element: ConnectionNode): vscode.TreeItem {
@@ -234,12 +235,12 @@ export function activate(context: vscode.ExtensionContext) {
 			searchBox = vscode.window.createInputBox();
 			searchBox.placeholder = 'Type to search connections...';
 			searchBox.onDidChangeValue((value) => {
-				if (value) {
-					connectionsProvider.filter(value);
-				} else {
-					connectionsProvider.clearFilter();
-				}
-			});
+			if (value && value.trim().length > 0) {
+				connectionsProvider.filter(value);
+			} else {
+				connectionsProvider.clearFilter();
+			}
+		});
 			searchBox.onDidAccept(() => {
 				searchBox?.dispose();
 			});

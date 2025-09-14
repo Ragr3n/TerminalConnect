@@ -15,9 +15,13 @@ Connect to remote hosts via SSH or Telnet directly from VS Code, using host defi
 ## Getting Started
 
 1. **Install the Extension:**  
+    Download the latest .vsix from github.
+    ![Installation Step 1](images/Installation-pt1.png)
+    In VS Code press `CTRL+SHIFT+P`to bring up the command pallet and search for `Extensions: Install from VSIX`
+    ![Installation Step 2](images/Installation-pt2.png)
+    Browse for the downloaded .vsix file and press Install
+    ![Installation Step 3](images/Installation-pt3.png)
 
-   Search for "Terminal Connect" in the VS Code marketplace and install.
-    
 2. **Create a `connections.yaml` file:**  
    Place this file in your workspace root. Example:
    ```yaml
@@ -40,7 +44,7 @@ Connect to remote hosts via SSH or Telnet directly from VS Code, using host defi
        port: 23
        description: Old system
    ```
-
+    ![Installation Step 3](images/Installation-pt4.png)
 3. **Open the Sidebar:**  
    Click the "Terminal Connect" icon in the Activity Bar.
 
@@ -62,7 +66,6 @@ You can use `{host}` and `{port}` as placeholders.
 ## Requirements
 
 - VS Code v1.103.0 or newer
-- [yaml](https://www.npmjs.com/package/yaml) npm package (bundled)
 - SSH/Telnet clients installed on your system
 
 ## Known Issues
@@ -72,6 +75,10 @@ You can use `{host}` and `{port}` as placeholders.
 ### 0.0.1
 
 - Initial release: SSH/Telnet tree view, YAML config, search, custom connection strings.
+
+### 0.0.2
+
+- Updated search functionality with dynamic filtering and created release.
 
 ---
 

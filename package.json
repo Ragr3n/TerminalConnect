@@ -65,13 +65,18 @@
       "properties": {
         "terminalConnect.sshConnectionString": {
           "type": "string",
-          "default": "ssh {host}",
-          "description": "Format string for opening an SSH connection. Use {host} and {port} as placeholders."
+          "default": "ssh {variables} {host}",
+          "description": "Format string for opening an SSH connection. Use {host}, {port}, and {variables} as placeholders."
         },
         "terminalConnect.telnetConnectionString": {
           "type": "string",
-          "default": "telnet {host}",
-          "description": "Format string for opening a Telnet connection. Use {host} and {port} as placeholders."
+          "default": "telnet {variables} {host}",
+          "description": "Format string for opening a Telnet connection. Use {host}, {port}, and {variables} as placeholders."
+        },
+        "terminalConnect.extraYamlFiles": {
+          "type": "array",
+          "description": "List of extra YAML files (relative to workspace or absolute) to load connections from.",
+          "default": []
         }
       }
     }

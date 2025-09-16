@@ -32,6 +32,7 @@ Connect to remote hosts via SSH or Telnet directly from VS Code, using host defi
            host: web.example.com
            protocol: ssh
            port: 22
+           variables: -i  ~/.ssh/id_ed25519_sk
            description: Main web server
          - name: Database
            host: db.example.com
@@ -54,6 +55,8 @@ Connect to remote hosts via SSH or Telnet directly from VS Code, using host defi
 ## Extension Settings
 
 This extension contributes the following settings:
+- `terminalConnect.extraYamlFiles`:  
+  List of extra YAML files (relative to workspace or absolute) to load connections from. Default: []
 
 - `terminalConnect.sshConnectionString`:  
   Format string for SSH connections. Default: `ssh {host}`
@@ -61,7 +64,7 @@ This extension contributes the following settings:
 - `terminalConnect.telnetConnectionString`:  
   Format string for Telnet connections. Default: `telnet {host}`
 
-You can use `{host}` and `{port}` as placeholders.
+You can use `{host}`, `{variables}` and `{port}` as placeholders.
 
 ## Requirements
 
@@ -80,7 +83,18 @@ You can use `{host}` and `{port}` as placeholders.
 
 - Updated search functionality with dynamic filtering and created release.
 
+### 0.0.3
+
+- Added setting for extra YAML input files and possibility to use variables from yaml in connection string. Cleaned up code.
+
 ---
+## Todo
+- [X] Add setting for extra YAML inputs
+- [X] Add setting for passing extra variables from yaml to connection commands
+- [ ] Add instructions for using flake
+- [X] Add icons for "style"
+- [ ] Publish to marketplace
+- [ ] Evaluate more connection methods Web, RDP, VNC?
 
 ## Contributing
 

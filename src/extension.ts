@@ -274,7 +274,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             searchBox.onDidChangeValue((value) => {
                 lastSearchQuery = value;
-                if (debounceTimer) {clearTimeout(debounceTimer);}
+                if (debounceTimer) { clearTimeout(debounceTimer); }
                 debounceTimer = setTimeout(() => {
                     if (value && value.trim().length > 0) {
                         connectionsProvider.filter(value);

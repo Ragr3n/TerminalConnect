@@ -20,8 +20,7 @@ suite('Extension Test Suite', () => {
             description: 'A test host',
             variables: '-i ~/.ssh/id_ed25519'
         };
-        // @ts-ignore
-        const node = extension.parseNode(yamlNode);
+        const node = extension.parseNode(yamlNode as any);
         assert.strictEqual(node.label, 'TestHost');
         assert.strictEqual(node.host, 'example.com');
         assert.strictEqual(node.protocol, 'ssh');

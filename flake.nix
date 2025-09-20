@@ -10,7 +10,7 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
       pname = "terminal-connect";
-      version = "0.0.2";
+      version = "0.0.3";
     in {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = [ pkgs.vsce ];

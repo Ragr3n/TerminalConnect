@@ -44,7 +44,10 @@
         "command": "terminalConnect.searchConnections",
         "title": "Terminal Connect: Search Connections",
         "icon": "$(search)"
-
+      },
+      {
+        "command": "terminalConnect.openWebsite",
+        "title": "Terminal Connect: Open Website"
       }
     ],
     "menus": {

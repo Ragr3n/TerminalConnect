@@ -31,9 +31,12 @@ Connect to remote hosts via SSH or Telnet directly from VS Code, using host defi
          - name: Web Server
            host: web.example.com
            protocol: ssh
-           port: 22
            variables: -i  ~/.ssh/id_ed25519_sk
            description: Main web server
+         - name: Web Server HTTP
+           host: https://web.example.com
+           protocol: web
+           description: Main web server   
          - name: Database
            host: db.example.com
            protocol: ssh
@@ -85,7 +88,7 @@ You can use `{host}`, `{variables}` and `{port}` as placeholders.
 
 ### 0.0.3
 
-- Added setting for extra YAML input files and possibility to use variables from yaml in connection string. Cleaned up code.
+- Added setting for extra YAML input files and possibility to use variables from yaml in connection string. Added web connection method. Cleaned up code.
 
 ---
 ## Todo
@@ -93,6 +96,7 @@ You can use `{host}`, `{variables}` and `{port}` as placeholders.
 - [X] Add setting for passing extra variables from yaml to connection commands
 - [ ] Add instructions for using flake
 - [X] Add icons for "style"
+- [ ] Add checklist for publishing new version/release, update README and flake
 - [ ] Publish to marketplace
 - [ ] Evaluate more connection methods Web, RDP, VNC?
 

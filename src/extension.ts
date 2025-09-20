@@ -17,7 +17,7 @@ export class ConnectionNode extends vscode.TreeItem {
         protocol?: string,
         port?: number,
         description?: string,
-        variables?: string
+        variables?: string,
     ) {
         super(label, collapsibleState);
         this.children = children;
@@ -28,27 +28,40 @@ export class ConnectionNode extends vscode.TreeItem {
         if (description) {
             this.description = description;
         }
-        if (host && protocol) {
+        if (!children || children.length === 0) {
             this.contextValue = 'host';
-            this.command = {
-                command: 'terminalConnect.openTerminal',
-                title: 'Open Terminal',
-                arguments: [this]
+            if (protocol === 'ssh' || protocol === 'telnet') {
+                this.command = {
+                    command: 'terminalConnect.openTerminal',
+                    title: 'Open Terminal',
+                    arguments: [this]
+                };
+            };
+            if (protocol === 'web') {
+                this.command = {
+                    command: 'terminalConnect.openWebsite',
+                    title: 'Open Website',
+                    arguments: [this]
+                };
             };
             this.tooltip = `${protocol} ${variables ?? ''} ${host}${port ? ':' + port : ''}`;
-            // Add icon based on protocol
             if (protocol === 'ssh') {
                 this.iconPath = new vscode.ThemeIcon('terminal');
-            } else if (protocol === 'telnet') {
+            } 
+            else if (protocol === 'telnet') {
                 this.iconPath = new vscode.ThemeIcon('bug');
-            } else {
+            }
+            else if (protocol === 'web') {
+                this.iconPath = new vscode.ThemeIcon('globe');
+            } 
+            else {
                 this.iconPath = new vscode.ThemeIcon('server');
             }
         }
     }
 }
 
-function openTerminal(node: ConnectionNode) {
+export function openTerminal(node: ConnectionNode) {
     if (!node.host || !node.protocol) {
         vscode.window.showErrorMessage('Missing host or protocol for connection.');
         return;
@@ -84,7 +97,15 @@ function openTerminal(node: ConnectionNode) {
     }
 }
 
-function parseNode(node: any): ConnectionNode {
+export function openWebsite(node: ConnectionNode) {
+    if (!node.host) {
+        vscode.window.showErrorMessage('No host defined for this connection.');
+        return;
+    }
+    vscode.env.openExternal(vscode.Uri.parse(node.host));
+}
+
+export function parseNode(node: any): ConnectionNode {
     if (node.children) {
         return new ConnectionNode(
             node.name,
@@ -100,7 +121,7 @@ function parseNode(node: any): ConnectionNode {
             node.protocol,
             node.port,
             node.description,
-            node.variables
+            node.variables,
         );
     }
 }
@@ -236,6 +257,9 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('terminalConnect.openTerminal', (node: ConnectionNode) => {
             openTerminal(node);
+        }),
+        vscode.commands.registerCommand('terminalConnect.openWebsite', (node: ConnectionNode) => {
+            openWebsite(node);
         }),
         vscode.commands.registerCommand('terminalConnect.refresh', () => connectionsProvider.refresh()),
         vscode.commands.registerCommand('terminalConnect.searchConnections', () => {

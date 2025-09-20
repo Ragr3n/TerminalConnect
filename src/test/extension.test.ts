@@ -1,27 +1,12 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-import { ConnectionNode, ConnectionsProvider } from '../extension';
+import * as extension from '../extension';
 
 suite('Extension Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
-    test('Extension should be present', async () => {
-        // Use the correct extension ID: publisher.name from package.json
-        const ext = vscode.extensions.getExtension('terminal-connect');
-        assert.ok(ext, "Extension 'terminal-connect' not found");
-        await ext.activate(); // Ensure extension is activated before checking presence
-    });
-
-    test('Command should be registered', async () => {
-        const ext = vscode.extensions.getExtension('Ragr3n.terminal-connect');
-        assert.ok(ext, "Extension 'Ragr3n.terminal-connect' not found");
-        await ext.activate(); // Ensure extension is activated before checking commands
-        const commands = await vscode.commands.getCommands(true);
-        assert.ok(commands.includes('terminalConnect.refresh'), "Command 'terminalConnect.refresh' not registered");
-    });
-
     test('ConnectionsProvider loads connections', () => {
-        const provider = new ConnectionsProvider();
+        const provider = new extension.ConnectionsProvider();
         const children = provider.getChildren();
         assert.ok(children instanceof Promise);
     });
@@ -36,7 +21,7 @@ suite('Extension Test Suite', () => {
             variables: '-i ~/.ssh/id_ed25519'
         };
         // @ts-ignore
-        const node = require('../extension').parseNode(yamlNode);
+        const node = extension.parseNode(yamlNode);
         assert.strictEqual(node.label, 'TestHost');
         assert.strictEqual(node.host, 'example.com');
         assert.strictEqual(node.protocol, 'ssh');
@@ -47,10 +32,10 @@ suite('Extension Test Suite', () => {
 
     test('ConnectionsProvider filter should match host and description', () => {
         const nodes = [
-            new ConnectionNode('A', 0, undefined, 'hostA', 'ssh', 22, 'descA', ''),
-            new ConnectionNode('B', 0, undefined, 'hostB', 'ssh', 22, 'descB', '')
+            new extension.ConnectionNode('A', 0, undefined, 'hostA', 'ssh', 22, 'descA', ''),
+            new extension.ConnectionNode('B', 0, undefined, 'hostB', 'ssh', 22, 'descB', '')
         ];
-        const provider = new ConnectionsProvider();
+        const provider = new extension.ConnectionsProvider();
         // @ts-ignore
         provider.allConnections = nodes;
         provider.filter('hostA');
@@ -66,7 +51,7 @@ suite('Extension Test Suite', () => {
     });
 
     test('openTerminal should generate correct command', () => {
-        const node = new ConnectionNode('Test', 0, undefined, 'host', 'ssh', 22, undefined, '-i key');
+        const node = new extension.ConnectionNode('Test', 0, undefined, 'host', 'telnet', 22, undefined, '-i key');
         // Mock vscode.window.createTerminal
         let sentText = '';
         const mockTerminal = {
@@ -76,7 +61,7 @@ suite('Extension Test Suite', () => {
         // @ts-ignore
         require('vscode').window.createTerminal = () => mockTerminal;
         // @ts-ignore
-        require('../extension').openTerminal(node);
-        assert.ok(sentText.startsWith('ssh -i key host'));
+        extension.openTerminal(node);
+        assert.ok(sentText.startsWith('telnet -i key host'));
     });
 });

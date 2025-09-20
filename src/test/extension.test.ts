@@ -35,8 +35,7 @@ suite('Extension Test Suite', () => {
             new extension.ConnectionNode('B', 0, undefined, 'hostB', 'ssh', 22, 'descB', '')
         ];
         const provider = new extension.ConnectionsProvider();
-        // @ts-ignore
-        provider.allConnections = nodes;
+        provider.setAllConnectionsForTest(nodes);
         provider.filter('hostA');
         // @ts-ignore
         assert.strictEqual(provider.filteredConnections.length, 1);
